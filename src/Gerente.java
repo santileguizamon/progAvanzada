@@ -1,4 +1,12 @@
 
-public class Gerente {
+public class Gerente extends Usuario{
 
+	
+	public void crearVuelo() {
+		
+	}
+	public void crearHotel() {
+		
+	}
+	
 }

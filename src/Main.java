@@ -5,22 +5,27 @@ public class Main {
 	public static void main (String [] args) {
 		
 		Empleado yo = new Empleado();
+		Gerente el = new Gerente();
 		
-		String menu[] = {"Buscar vuelos","Crear paquete"};
+		String menu[] = {"Crear pasaje","Crear Reserva","Agregar vuelos","Agregar hoteles"};
 		int opcion= 0;
 		do {
 			opcion = JOptionPane.showOptionDialog(null, "Seleccione la opcion a realizar", null, 0, 0, null, menu, menu[0]);
 			switch (opcion) {
 			case 0: 
-				//crearReservaVuelo(); su funcion seria buscar un vuelo, seleccionarlo, y crear la reserva del vuelo en donde esta devuelve un ticket con la info necesaria
+				JOptionPane.showMessageDialog(null, "Aqui se da la posibilidad de buscar vuelos y crear el pasaje");
 				break;
 			case 1:
-				//crearReservaVuelo(); lo mismo que la de arriba 
-				//crearReservaDestino(); busca un hotel en el destino seleccionado y crea una reserva con su ticket
+				JOptionPane.showMessageDialog(null, "Aqui se da la posibilidad de buscar hoteles en el destino y crear la reserva");
 				break;
-				
+			case 2:
+				JOptionPane.showMessageDialog(null, "El gerente tiene la capacidad de agregar vuelos");
+				break;
+			case 3:
+				JOptionPane.showMessageDialog(null, "El gerente tiene la capacidad de agregar hoteles");
+				break;
 			}
-		}while(opcion!=1 && opcion!=2); 
+		}while(opcion!=3 && opcion!=4); 
 	}
 	
 }
