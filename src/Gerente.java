@@ -1,12 +1,16 @@
+import java.sql.Date;
 
-public class Gerente extends Usuario{
 
+import javax.swing.JOptionPane;
+
+public class Gerente{
+	Usuario gerente;
+	Vuelo vuelo;
+	Conexion conexion;
+	Destino destino;
 	
-	public void crearVuelo() {
-		
-	}
-	public void crearHotel() {
-		
-	}
+	
+	
+	
 	
 }
