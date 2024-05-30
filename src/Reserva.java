@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -5,37 +8,64 @@ import javax.swing.JOptionPane;
 public class Reserva implements Usedb {
 
 	Destino destino;
-	Pasajero pasajero;
+	public String nombre;
+	public String apellido;
+	public String dni;
+	public String email;
 	public double precio;
 	
 
-	public void generarTicketReserva(Pasajero pasajero, Destino destino) {
-	    LinkedList<Destino> hotelesDisponibles = obtenerHotelesDisponibles(hotelesDisponibles);
-	    Destino hotelSeleccionado = seleccionarHotel(hotelesDisponibles);
+	public void generarTicketReserva() {
+	    LinkedList<Destino> hotelesDisponibles = obtenerHotelesDisponibles();
+	    String hotelInfo = "";
 
-	    if (hotelSeleccionado != null) {
+        for (int i = 0; i < hotelesDisponibles.size(); i++) {
+        	hotelInfo += (i + 1) + ". Nombre del destino: " + hotelesDisponibles.get(i).getDestino() + "\n";
+        	hotelInfo += "Nombre del hotel: " + hotelesDisponibles.get(i).getNombreHotel() + "\n";
+        	hotelInfo += "Forma de movilidad: " + hotelesDisponibles.get(i).getMovilidad() + "\n";
+        }
 
-	    	String contenidoTicket = generarContenidoTicketHotel(hotelSeleccionado, destino, pasajero);
-	        JOptionPane.showMessageDialog(null, contenidoTicket, "Ticket de reserva de hotel", JOptionPane.INFORMATION_MESSAGE);
-	    } else {
-	        JOptionPane.showMessageDialog(null, "No se seleccionó ningún hotel", "Error", JOptionPane.ERROR_MESSAGE);
-	    }
-	}
+        int seleccion = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Selecciona un hotel:\n" + hotelInfo, "Hoteles disponibles", JOptionPane.QUESTION_MESSAGE, null, null, "0"));
+
+        if (seleccion > 0 && seleccion <= hotelesDisponibles.size()) {
+            destino = hotelesDisponibles.get(seleccion - 1);
+            nombre = JOptionPane.showInputDialog(null, "Ingresa tu nombre:");
+            apellido = JOptionPane.showInputDialog(null, "Ingresa tu apellido:");
+            dni = JOptionPane.showInputDialog(null, "Ingresa tu número de documento:");
+            email =  JOptionPane.showInputDialog(null, "Ingresa tu email:");
+            precio = 1000.0; 
+            
+            String informacionTicket = "Nombre: " + nombre + "\n" +
+                    "Apellido: " + apellido + "\n" +
+                    "Documento: " + dni + "\n" +
+                    "Datos del destino: " + destino + "\n";;
+            JOptionPane.showMessageDialog(null, informacionTicket, "Reserva", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+    }
 	
 	
-	private Destino seleccionarHotel(LinkedList<Destino> hotelesDisponibles) {
-	    String[] opcionesHotel = new String[hotelesDisponibles.size()];
-	    for (int i = 0; i < hotelesDisponibles.size(); i++) {
-	        opcionesHotel[i] = hotelesDisponibles.get(i).getNombreHotel();
-	    }
+	private LinkedList<Destino> obtenerHotelesDisponibles () {
+		LinkedList<Destino> hotelesDisponibles = new LinkedList<>();
 
-	    int indiceHotelSeleccionado = JOptionPane.showOptionDialog(null, "Selecciona un hotel:", "Elegir hotel", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcionesHotel, opcionesHotel[0]);
-
-	    if (indiceHotelSeleccionado != -1) {
-	        return hotelesDisponibles.get(indiceHotelSeleccionado);
-	    } else {
-	        return null;
-	    }
+        try {
+            Connection conn = (Connection) Conexion.getInstance();
+            Statement stmt = (Statement) conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM hotel");
+            while (rs.next()) {
+                Destino hotel = new Destino();
+                hotel.destino = rs.getString("nombre_avion");
+                hotel.nombreHotel = rs.getString("nombre_destino");
+                hotel.movilidad = rs.getString("nombre_origen");
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hotelesDisponibles;
 	}
 	
 	public Destino getDestino() {
@@ -44,12 +74,8 @@ public class Reserva implements Usedb {
 	public void setDestino(Destino destino) {
 		this.destino = destino;
 	}
-	public Pasajero getPasajero() {
-		return pasajero;
-	}
-	public void setPasajero(Pasajero pasajero) {
-		this.pasajero = pasajero;
-	}
+	
+	
 	public double getPrecio() {
 		return precio;
 	}
@@ -101,10 +127,11 @@ public class Reserva implements Usedb {
 
 
 	@Override
-	public void obtenerHotelesDisponibles(LinkedList<Destino> destino) {
+	public void addhotelesDisponibles(LinkedList<Destino> destino) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 	
 	

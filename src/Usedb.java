@@ -8,7 +8,7 @@ public interface Usedb {
 	void addHorario(Vuelo horarioSalidaLlegada);
 	void addFecha(Vuelo fecha);
 	void obtenerVuelos(LinkedList<Vuelo> vuelos);
-	void obtenerHotelesDisponibles(LinkedList<Destino>destino);
+	void addhotelesDisponibles(LinkedList<Destino>destino);
 	
 	
 }

@@ -1,14 +1,8 @@
 
-public class Empleado extends Usuario{
+public class Empleado{
 	
+	Reserva reserva;
+	Pasaje pasaje;
 	
-	
-	public void crearReservaVuelo() {
-			
-			
-	}
-	public void crearReservaHotel() {
-		
-	}
 	
 }

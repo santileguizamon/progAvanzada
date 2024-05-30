@@ -13,16 +13,16 @@ public class Main {
 			opcion = JOptionPane.showOptionDialog(null, "Seleccione la opcion a realizar", null, 0, 0, null, menu, menu[0]);
 			switch (opcion) {
 			case 0: 
-				JOptionPane.showMessageDialog(null, "Aqui se da la posibilidad de buscar vuelos y crear el pasaje");
+				yo.pasaje.generarTicketVuelo();
 				break;
 			case 1:
-				JOptionPane.showMessageDialog(null, "Aqui se da la posibilidad de buscar hoteles en el destino y crear la reserva");
+				yo.reserva.generarTicketReserva();
 				break;
 			case 2:
-				JOptionPane.showMessageDialog(null, "El gerente tiene la capacidad de agregar vuelos");
+				el.vuelo.crearVuelo(null);
 				break;
 			case 3:
-				JOptionPane.showMessageDialog(null, "El gerente tiene la capacidad de agregar hoteles");
+				el.destino.crearHotel();
 				break;
 			}
 		}while(opcion!=3 && opcion!=4); 
