@@ -19,10 +19,10 @@ public class Main {
 				yo.reserva.generarTicketReserva();
 				break;
 			case 2:
-				el.vuelo.crearVuelo(null);
+				el.vuelo.crearVuelo(null, null, null, null, null, null);
 				break;
 			case 3:
-				el.destino.crearHotel();
+				el.destino.crearHotel(null, null, null);
 				break;
 			}
 		}while(opcion!=3 && opcion!=4); 

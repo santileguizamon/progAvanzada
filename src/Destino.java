@@ -13,27 +13,30 @@ public class Destino {
     public String movilidad;
 
 
-    public void crearHotel() {
+    public boolean crearHotel(String destino, String nombreHotel, String movilidad) {
         this.destino = JOptionPane.showInputDialog(null, "Ingrese el nombre del destino:");
         if (this.destino == null || this.destino.isEmpty()) {
             JOptionPane.showMessageDialog(null, "El nombre del hotel no puede estar vacío.");
-            return;
+            return false;
         }
         this.nombreHotel = JOptionPane.showInputDialog(null, "Ingrese el nombre del hotel:");
         if (this.nombreHotel == null || this.nombreHotel.isEmpty()) {
             JOptionPane.showMessageDialog(null, "El nombre del hotel no puede estar vacía.");
-            return;
+            return false;
         }
         this.movilidad = JOptionPane.showInputDialog(null, "Ingrese la opcion de movilidad");
         if (this.movilidad == null || this.movilidad.isEmpty()) {
             JOptionPane.showMessageDialog(null, "La movilidad no puede estar vacía.");
-            return;
+            return false;
         }
-
+        this.destino = destino;
+        this.nombreHotel = nombreHotel;
+        this.movilidad = movilidad;
+        	return insertarHotelEnBD(this);
     }
         
 
-        public void insertarHotelEnBD(Conexion connection, Vuelo vuelo) {
+        public boolean insertarHotelEnBD( Destino destino) {
             try {
             	Connection conn = (Connection) Conexion.getInstance();
                 Statement stmt = (Statement) conn.createStatement();     
@@ -46,8 +49,10 @@ public class Destino {
                 pstmt.executeUpdate();
                 conn.close();
 
+                return true;
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al insertar vuelo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }  
 }
 

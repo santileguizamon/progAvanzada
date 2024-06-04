@@ -1,3 +1,4 @@
+import java.sql.Time;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -8,15 +9,15 @@ public class CrearPasaje {
 	 private static final String nombre_avion = "Boeing 737";
 	    private static final String nombre_destino = "Buenos Aires";
 	    private static final String nombre_origen = "Córdoba";
-	    private static final Date horario_salida = new Date(122, 5, 29, 10, 0, 0);
-	    private static final Date horario_llegada = new Date(122, 5, 29, 15, 0, 0);
+	    private static final Time horario_salida = (Time) new Date(122, 5, 29, 10, 0, 0);
+	    private static final Time horario_llegada = (Time) new Date(122, 5, 29, 15, 0, 0);
 	    private static final Date fecha = new Date(122, 5, 29);
 
 	    private Vuelo vuelo;
 	    private LinkedList<Vuelo> vuelos;
 	    
 	   public void agregar() {
-	        vuelo = new Vuelo(nombre_avion, nombre_destino, nombre_origen, horario_salida, horario_llegada, fecha);
+	        vuelo = new Vuelo(nombre_avion, nombre_destino, nombre_origen, horario_salida, horario_llegada, (Time) fecha);
 	        vuelos = new LinkedList<>();
 	        vuelos.add(vuelo);
 	        }

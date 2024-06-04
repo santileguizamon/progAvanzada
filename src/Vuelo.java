@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,11 +17,11 @@ public class Vuelo {
     public String nombreAvion;
     public String nombreDestino;
     public String nombreOrigen;
-    public Date horarioSalida;
-    public Date horarioLlegada;
+    public Time horarioSalida;
+    public Time horarioLlegada;
     public Date fecha;
 
-    public Vuelo(String nombreAvion, String nombreDestino, String nombreOrigen, Date fecha, Date horarioSalida, Date horarioLlegada) {
+    public Vuelo(String nombreAvion, String nombreDestino, String nombreOrigen, Date fecha, Time horarioSalida, Time horarioLlegada) {
         this.nombreAvion = nombreAvion;
         this.nombreDestino = nombreDestino;
         this.nombreOrigen = nombreOrigen;
@@ -29,24 +30,55 @@ public class Vuelo {
         this.horarioLlegada = horarioLlegada;
     }
     
-    public void crearVuelo(Conexion connection) {
+    public boolean crearVuelo(String nombreAvion,String nombreDestino,String nombreOrigen,String fechaString,String horaSalidaString,
+    String horaLlegadaString){
 
-        String nombreAvion = JOptionPane.showInputDialog(null, "Ingrese el nombre del avión:");
-        String nombreDestino = JOptionPane.showInputDialog(null, "Ingrese el nombre del destino:");
-        String nombreOrigen = JOptionPane.showInputDialog(null, "Ingrese el nombre del origen:");
-        String fechaString = JOptionPane.showInputDialog(null, "Ingrese la fecha (formato dd/mm/aaaa):");
-        String horaSalidaString = JOptionPane.showInputDialog(null, "Ingrese la hora de salida (formato hh:mm):");
-        String horaLlegadaString = JOptionPane.showInputDialog(null, "Ingrese la hora de llegada (formato hh:mm):");
-        Date fecha = null;
-        Date horarioSalida = null;
-        Date horarioLlegada = null;
+    	this.nombreAvion = JOptionPane.showInputDialog(null, "Ingrese el nombre del avion:");
+        if (this.nombreAvion == null || this.nombreAvion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El nombre del avion no puede estar vacío.");
+            return false;
+        }
+        this.nombreDestino = JOptionPane.showInputDialog(null, "Ingrese el nombre del destino:");
+        if (this.nombreDestino == null || this.nombreDestino.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El nombre del destino no puede estar vacía.");
+            return false;
+        }
+        this.nombreOrigen = JOptionPane.showInputDialog(null, "Ingrese el nombre del origen");
+        if (this.nombreOrigen == null || this.nombreOrigen.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El nombre del origen no puede estar vacio:");
+            return false;
+        }
+        this.fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha del vuelo");
+        if (this.fecha == null || ((CharSequence) this.fecha).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "La fecha no puede estar vacia");
+            return false;
+        }
+        this.horarioSalida = JOptionPane.showInputDialog(null, "Ingrese el horario de salida");
+        if (this.horarioSalida == null || ((CharSequence) this.horarioSalida).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El horario de salida no puede estar vacio:");
+            return false;
+        }
+        this.horarioLlegada = JOptionPane.showInputDialog(null, "Ingrese el horario de llegada");
+        if (this.horarioLlegada == null || ((CharSequence) this.horarioLlegada).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El horario de llegada no puede estar vacio:");
+            return false;
+        }
+        Date fecha;
+        Time horarioSalida;
+        Time horarioLlegada;
+
         try {
-            fecha = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(fechaString);
-            horarioSalida = (Date) new SimpleDateFormat("HH:mm").parse(horaSalidaString);
-            horarioLlegada = (Date) new SimpleDateFormat("HH:mm").parse(horaLlegadaString);
-        } catch (Exception e) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false); 
+            fecha = new Date(dateFormat.parse(fechaString).getTime());
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            timeFormat.setLenient(false);
+            horarioSalida = new Time(timeFormat.parse(horaSalidaString).getTime());
+            horarioLlegada = new Time(timeFormat.parse(horaLlegadaString).getTime());
+        } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Error al convertir fechas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
         this.nombreAvion = nombreAvion;
         this.nombreDestino = nombreDestino;
@@ -54,11 +86,11 @@ public class Vuelo {
         this.fecha = fecha;
         this.horarioSalida = horarioSalida;
         this.horarioLlegada = horarioLlegada;
-        insertarVueloEnBD(connection, this);
-        JOptionPane.showMessageDialog(null, "Vuelo creado con éxito!");
+        return insertarVueloEnBD(this);
+       
     }
 
-    public void insertarVueloEnBD(Conexion connection, Vuelo vuelo) {
+    public boolean insertarVueloEnBD(Vuelo vuelo) {
         try {
         	Connection conn = (Connection) Conexion.getInstance();
             Statement stmt = (Statement) conn.createStatement();     
@@ -73,13 +105,15 @@ public class Vuelo {
             pstmt.setTime(6, (Time) vuelo.horarioLlegada);
             pstmt.executeUpdate();
             conn.close();
-
+            
+            return true;
+            
         } catch (SQLException e) {
 
             JOptionPane.showMessageDialog(null, "Error al insertar vuelo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-
+            return false;
         }
-
+        
     }
 
 

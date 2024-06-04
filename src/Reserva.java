@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-public class Reserva implements Usedb {
+public class Reserva  {
 
 	Destino destino;
 	public String nombre;
@@ -17,6 +17,10 @@ public class Reserva implements Usedb {
 
 	public void generarTicketReserva() {
 	    LinkedList<Destino> hotelesDisponibles = obtenerHotelesDisponibles();
+	    if (hotelesDisponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay hoteles disponibles", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 	    String hotelInfo = "";
 
         for (int i = 0; i < hotelesDisponibles.size(); i++) {
@@ -24,9 +28,21 @@ public class Reserva implements Usedb {
         	hotelInfo += "Nombre del hotel: " + hotelesDisponibles.get(i).getNombreHotel() + "\n";
         	hotelInfo += "Forma de movilidad: " + hotelesDisponibles.get(i).getMovilidad() + "\n";
         }
+        
+        String seleccionStr = JOptionPane.showInputDialog(null, "Selecciona un hotel:\n" + hotelInfo, "Hoteles disponibles", JOptionPane.QUESTION_MESSAGE);
+        if (seleccionStr == null || seleccionStr.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selección inválida", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int seleccion;
+        try {
+            seleccion = Integer.parseInt(seleccionStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Selección inválida", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        int seleccion = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Selecciona un hotel:\n" + hotelInfo, "Hoteles disponibles", JOptionPane.QUESTION_MESSAGE, null, null, "0"));
-
+      
         if (seleccion > 0 && seleccion <= hotelesDisponibles.size()) {
             destino = hotelesDisponibles.get(seleccion - 1);
             nombre = JOptionPane.showInputDialog(null, "Ingresa tu nombre:");
@@ -84,53 +100,7 @@ public class Reserva implements Usedb {
 	}
 
 
-	@Override
-	public void addVuelo(Vuelo nombreAvion) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addDestino(Vuelo nombreDestino) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addOrigen(Vuelo nombreOrigen) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addHorario(Vuelo horarioSalidaLlegada) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addFecha(Vuelo fecha) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void obtenerVuelos(LinkedList<Vuelo> vuelos) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void addhotelesDisponibles(LinkedList<Destino> destino) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 	
