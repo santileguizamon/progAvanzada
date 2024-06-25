@@ -1,3 +1,4 @@
+package principal;
 import javax.swing.*;
 
 import java.sql.*;
@@ -91,12 +92,13 @@ public class Pasaje {
             Statement stmt = (Statement) conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM vuelos");
             while (rs.next()) {
-                vuelo.nombreAvion = rs.getString("nombre_avion");
-                vuelo.nombreDestino = rs.getString("nombre_destino");
-                vuelo.nombreOrigen = rs.getString("nombre_origen");
-                vuelo.horarioSalida = rs.getTime("horario_salida");
-                vuelo.horarioLlegada = rs.getTime("horario_llegada");
-                vuelo.fecha = rs.getDate("fecha");
+            	Vuelo vuelo = new Vuelo();
+                vuelo.setNombreAvion(rs.getString("nombre_avion")) ;
+                vuelo.setNombreDestino(rs.getString("nombre_destino"));
+                vuelo.setNombreOrigen(rs.getString("nombre_origen")); 
+                vuelo.setHorarioSalida(rs.getTime("horario_salida")); 
+                vuelo.setHorarioLlegada(rs.getTime("horario_llegada")); 
+                vuelo.setFecha(rs.getDate("fecha")); 
                 vuelos.add(vuelo);
             }
             rs.close();
