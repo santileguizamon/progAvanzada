@@ -121,7 +121,7 @@ public class Destino {
         return destinos;
     }
 	
-	 public boolean deleteDestino(String nombreHotel) {
+	 public static boolean deleteDestino(String nombreHotel) {
 	        try {
 	        	Connection conn = (Connection) Conexion.getInstance();
 	            PreparedStatement statement = conn.prepareStatement("DELETE FROM destinos WHERE nombreHotel = ?");

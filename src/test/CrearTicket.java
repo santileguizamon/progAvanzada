@@ -20,11 +20,13 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
@@ -41,6 +43,7 @@ public class CrearTicket extends JFrame {
 	private JButton Editar;
 	private Vuelo vuelo = new Vuelo();
 	 private DefaultTableModel model;
+	private JLabel informacion;
 
 	/**
 	 * Launch the application.
@@ -128,7 +131,7 @@ public class CrearTicket extends JFrame {
         JButton agregarBtn = new JButton("Agregar");
         agregarBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		agregarProducto();
+        		agregarPasaje();
         	}
         });
         
@@ -236,72 +239,38 @@ public class CrearTicket extends JFrame {
 	        }
 	 }
 	 
-	 private void agregarProducto() {
-	        Vuelo vuelo = (Vuelo) table.get;
-	        String Nombre = textNombre.getText();
-	        String Apellido = textApellido.getText();
-	        String Dni = textDni.getText();
-	        
+	 private void agregarPasaje() {
+		 	String nombre = textNombre.getText();
+		    String apellido = textApellido.getText();
+		    String dni = textDni.getText();
+		    //int asiento = (int) boxAsientos.getSelectedItem();
 
-	        // Verificar si el producto ya está en la venta actual
-	        for (Vuelo vuelo : vueloPasaje.getDetalles()) {
-	            if (detalle.getProductoId() == producto.getId()) {
-	                // Si el producto ya está en la venta, actualizar la cantidad y salir del método
-	                detalle.setCantidad(detalle.getCantidad() + cantidad);
-	                actualizarTicket();
-	                return;
-	            }
-	        }
+		    
+		   
+			// Actualizar la información del ticket
+		    informacion.setText("Nombre: " + nombre + " Apellido: " + apellido + " DNI: " + dni + " Asiento: " );
 
-	        // Si el producto no está en la venta, agregarlo como un nuevo detalle
-	        vueloPasaje.getDetalles().add(new DetalleVenta(producto.getId(), cantidad));
-
-	        actualizarTicket();
+		    // Limpiar los campos de texto
+		    textNombre.setText("");
+		    textApellido.setText("");
+		    textDni.setText("");
+		    //boxAsientos.setSelectedIndex(0);
 	    }
 	 private void guardarVenta() {
-	        // Verificar la disponibilidad de productos antes de guardar la venta
-	        if (!verificarDisponibilidadProductos()) {
-	            JOptionPane.showMessageDialog(this, "No hay suficiente stock disponible para completar la venta.");
-	            return;
-	        }
 
-	        // Restar la cantidad vendida del stock de productos
-	        restarCantidadProductos();
+		    // Guardar la venta en la base de datos
+		    try {
+				vuelo.guardarTicket(vuelo);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-	        // Guardar la venta en la base de datos
-	        ventaControlador.addVenta(vueloPasaje); // Pasar el usuario actual al guardar la venta
-	        JOptionPane.showMessageDialog(this, "Venta guardada exitosamente");
 
-	        // Limpiar venta actual y actualizar ticket
-	        vueloPasaje = new Vuelo(0);
-	        a();
+		    // Limpiar la venta actual
+		    vuelo = new Vuelo();
+			informacion.setText("");
 	    }
 	 
-	 private void restarCantidadProductos() {
-	        for (DetalleVenta detalle : ventaActual.getDetalles()) {
-	            Producto producto = productoControlador.getProductById(detalle.getProductoId());
-	            int nuevaCantidad = producto.getCantidad() - detalle.getCantidad();
-	            producto.setCantidad(nuevaCantidad);
-	            productoControlador.updateProduct(producto);
-	        }
-	    }
-	 private boolean verificarDisponibilidadProductos() {
-	        for (DetalleVenta detalle : vueloPasaje.getDetalles()) {
-	            Producto producto = productoControlador.getProductById(detalle.getProductoId());
-	            if (producto.getCantidad() < detalle.getCantidad()) {
-	                return false;
-	            }
-	        }
-	        return true;
-	    }
-	 private void actualizarTicket() {
-	        ticketArea.setText("Ticket de Venta:\n\n");
-	        double total = 0.0;
-	        for (DetalleVenta detalle : ventaActual.getDetalles()) {
-	            Vuelo vuelo = Vuelo.getNombreAvion(detalle.getNombreAvion());
-	           
-	            ticketArea.append(producto.getNombre() + "\tCantidad: " + detalle.getCantidad() + "\tSubtotal: $" + subtotal + "\n");
-	        }
-	        ticketArea.append("\nTotal: $" + total);
-	    }
+	 
 }

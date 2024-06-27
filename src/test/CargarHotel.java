@@ -217,11 +217,11 @@ public class CargarHotel extends JFrame {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
-                    int id = (int) table.getValueAt(selectedRow, 0);
-                    String nombre = (String) table.getValueAt(selectedRow, 1);
-                    String mail = (String) table.getValueAt(selectedRow, 2);
-                    int rol = (int) table.getValueAt(selectedRow, 3);
-                    elemento.setText("Seleccionado: Destino=" + destino + ", Nombre Hotel=" + nombreHotel + ", Movilidad=" + movilidad);
+                    String destino = (String) table.getValueAt(selectedRow, 0);
+                    String hotel = (String) table.getValueAt(selectedRow, 1);
+                    String movilidad = (String) table.getValueAt(selectedRow, 2);
+                    
+                    elemento.setText("Seleccionado: Destino=" + destino + ", Nombre Hotel=" + hotel + ", Movilidad=" + movilidad);
                     
                 }
             }

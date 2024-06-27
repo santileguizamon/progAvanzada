@@ -6,7 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import principal.Gerente;
+import test.HomeEmpleado;
+import test.HomeGerente;
 import principal.Usuario;
 
 import javax.swing.JTextField;
@@ -81,13 +82,7 @@ public class PantallaInicio extends JFrame {
 		errorNombre.setBounds(135, 102, 94, 14);
 		errorNombre.setVisible(false);
 		contentPane.add(errorNombre);
-		
-		JLabel errorContraseña = new JLabel("Contraseña incorrecto");
-		errorContraseña.setForeground(Color.RED);
-		errorContraseña.setBounds(135, 173, 126, 14);
-		errorNombre.setVisible(false);	
-		contentPane.add(errorContraseña);
-		
+						
 		JLabel lblError = new JLabel("");
 		lblError.setBounds(50, 236, 208, 28);
 		contentPane.add(lblError);
@@ -98,27 +93,36 @@ public class PantallaInicio extends JFrame {
 		lblNewLabel_1_1.setBounds(135, 127, 94, 14);
 		contentPane.add(lblNewLabel_1_1);
 		
+		JLabel errorContraseña = new JLabel("Contraseña incorrecto");
+		errorContraseña.setForeground(Color.RED);
+		errorContraseña.setBounds(135, 173, 126, 14);
+		errorNombre.setVisible(false);	
+		contentPane.add(errorContraseña);
+		
 		JButton botonIngresar = new JButton("Ingresar");
 		botonIngresar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		botonIngresar.setBounds(182, 198, 89, 23);
 		contentPane.add(botonIngresar);
 		botonIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			String respuesta = Usuario.IniciarSesion(inputNombre.getText(),inputNombre.getText());
-			 if(respuesta.equals("rol:1")) {
-				 
-				 Home home = new Home(inputNombre.getText());
-				 dispose();
-			 }else if(respuesta.equals("rol:2")) {
-				 
-				 Gerente admin = new Gerente();
-				 dispose();
-			 }{
-				 lblError.setText(respuesta);
-				lblError.setVisible(true);
+			
+				String respuesta = Usuario.IniciarSesion(inputNombre.getText(), inputContraseña.getText());
+				 if(respuesta.equals("rol:1")) {
+					 
+					 HomeGerente homeGerente = new HomeGerente(inputNombre.getText());
+					 homeGerente.setVisible(true);
+					 dispose();
+				 }else if(respuesta.equals("rol:2")) {
+					 
+					 HomeEmpleado homeEmpleado = new HomeEmpleado(inputNombre.getText());
+					 homeEmpleado.setVisible(true); 
+					 dispose();
+				 }{
+					 lblError.setText(respuesta);
+					lblError.setVisible(true);
 
-			 }
+				 }
+		        
 			}
 		});
 		
@@ -129,8 +133,10 @@ public class PantallaInicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				Registro registro = new Registro();
+				registro.setVisible(true);
 				dispose();
 			}
 		});
 	}
 }
+

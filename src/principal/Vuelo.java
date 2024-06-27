@@ -25,7 +25,7 @@ public class Vuelo {
     private Time horarioSalida;
     private Time horarioLlegada;
     private Date fecha;
-    private List<DetalleVuelo> detalles;
+    
 
     public Vuelo(String nombreAvion, String nombreDestino, String nombreOrigen, Date fecha, Time horarioSalida, Time horarioLlegada) {
         this.nombreAvion = nombreAvion;
@@ -34,7 +34,7 @@ public class Vuelo {
         this.fecha = fecha;
         this.horarioSalida = horarioSalida;
         this.horarioLlegada = horarioLlegada;
-        this.detalles = new ArrayList<>();
+        
     }
     
     public Vuelo() {
@@ -231,6 +231,27 @@ public void setFecha(Date fecha) {
 public String toString() {
 	return "Vuelo [nombreAvion=" + nombreAvion + ", nombreDestino=" + nombreDestino + ", nombreOrigen=" + nombreOrigen
 			+ ", horarioSalida=" + horarioSalida + ", horarioLlegada=" + horarioLlegada + ", fecha=" + fecha + "]";
+}
+
+public void guardarTicket(Vuelo vuelo) throws SQLException {
+
+	Connection conn = (Connection) Conexion.getInstance();
+	PreparedStatement pstmt = conn.prepareStatement("INSERT INTO pasajes (nombreAvion, fecha_venta) VALUES (?, ?)");
+    try {
+		Statement stmt = (Statement) conn.createStatement();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+    pstmt.setString(1, this.getNombreAvion()); 
+    pstmt.setDate(2, (java.sql.Date) new Date()); 
+    pstmt.executeUpdate();
+
+    ResultSet rs = pstmt.getGeneratedKeys();
+    int ventaId = 0;
+    if (rs.next()) {
+        ventaId = rs.getInt(1);
+    }
+    conn.close();
 }
         
         

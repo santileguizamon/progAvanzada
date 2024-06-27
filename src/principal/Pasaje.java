@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.sql.*;
 
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class Pasaje {
@@ -17,7 +18,20 @@ public class Pasaje {
     private double precio;
 
 
-    public void generarTicketVuelo() {
+    public Pasaje(String nombreDestino, String nombreHotel, String movilidad) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Pasaje(List<Pasaje> listaPasajes) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+        
+
+
+
+	public void generarTicketVuelo() {
 
         LinkedList<Vuelo> vuelos = obtenerVuelos();
         if (vuelos.isEmpty()) {

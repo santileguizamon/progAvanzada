@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import principal.Usuario;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -92,7 +95,7 @@ public class Registro extends JFrame {
 				
 				String respuesta = Usuario.Registrarse(ingresoUsuario.getText(),ingresoContraseña.getText() );
 				 if(respuesta.equals("Ok")) {
-					 Home home = new Home(ingresoUsuario.getText());
+					 HomeGerente home = new HomeGerente(ingresoUsuario.getText());
 					 dispose();
 				 }else {
 					 lblError.setText(respuesta);
