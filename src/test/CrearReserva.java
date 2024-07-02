@@ -36,6 +36,11 @@ public class CrearReserva extends JFrame {
 	private Destino destino = new Destino();
 	private JTextField filtro;
 	private List<Pasaje> listaPasajes = new ArrayList<Pasaje>();
+	private JButton agregar;
+	private JTable table_1;
+	private JTextField nombre;
+	private JTextField apellido;
+	private JTextField dni;
 
 	/**
 	 * Launch the application.
@@ -58,51 +63,84 @@ public class CrearReserva extends JFrame {
 	 */
 	public CrearReserva() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 567, 362);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		
+		 destino = new Destino();
 		
 		String[] columnNames = {"nombreHotel", "nombreDestino", "movilidad"};
-	    model = new DefaultTableModel(columnNames, 0);
-		table = new JTable();
-		table.setBounds(31, 11, 365, 125);
-		contentPane.add(table);
+		 model = new DefaultTableModel(columnNames, 0);
+		 table = new JTable(model);
+		actualizarTabla();
+		contentPane.setLayout(null);
 		
 		
 		filtro = new JTextField();
-        filtro.setBounds(98, 142, 86, 20);
+        filtro.setBounds(10, 142, 86, 20);
         contentPane.add(filtro);
         filtro.setColumns(10);
 		
         JLabel criterio = new JLabel("Criterio");
-        criterio.setBounds(52, 145, 62, 14);
+        criterio.setBounds(20, 127, 62, 14);
         contentPane.add(criterio);
         
         JButton filtrar = new JButton("Filtrar");
-        filtrar.setBounds(185, 141, 89, 23);
+        filtrar.setBounds(106, 141, 62, 23);
         contentPane.add(filtrar);
         filtrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {       		
         		Filtrar(filtro.getText());       		
         	}
         });
-        
-        JButton agregarBtn = new JButton("Agregar");
-        agregarBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		agregarPasaje();
-        	}
-        });
+       
         
         
         Destino destino = new Destino();
         
         JLabel informacion = new JLabel("New label");
-        informacion.setBounds(52, 186, 247, 64);
+        informacion.setBounds(52, 186, 299, 110);
         contentPane.add(informacion);
+        
+        agregar = new JButton("Agregar");
+        agregar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		agregarPasaje();
+        	}
+        });
+        agregar.setBounds(448, 207, 89, 23);
+        contentPane.add(agregar);
+        
+        nombre = new JTextField();
+        nombre.setBounds(206, 142, 93, 20);
+        contentPane.add(nombre);
+        nombre.setColumns(10);
+        
+        apellido = new JTextField();
+        apellido.setBounds(333, 142, 89, 20);
+        contentPane.add(apellido);
+        apellido.setColumns(10);
+        
+        dni = new JTextField();
+        dni.setBounds(451, 142, 86, 20);
+        contentPane.add(dni);
+        dni.setColumns(10);
+        
+        JLabel n = new JLabel("Nombre");
+        n.setBounds(208, 127, 46, 14);
+        contentPane.add(n);
+        
+        JLabel lblNewLabel = new JLabel("Apellido");
+        lblNewLabel.setBounds(333, 127, 46, 14);
+        contentPane.add(lblNewLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("Dni");
+        lblNewLabel_1.setBounds(448, 127, 46, 14);
+        contentPane.add(lblNewLabel_1);
+        
+       
         
      // Configurar el modelo de selección
         ListSelectionModel selectionModel = table.getSelectionModel();
@@ -162,8 +200,11 @@ public class CrearReserva extends JFrame {
 	 
 	 private void agregarPasaje() {
 		 int selectedRow = table.getSelectedRow();
+		 String nombreValue = nombre.getText();
+		 String apellidoValue = apellido.getText();
+		 String dniValue = dni.getText();
 		    
-			if (selectedRow!= -1) {
+			if (selectedRow!= -1 && !nombreValue.isEmpty() && !apellidoValue.isEmpty() && !dniValue.isEmpty()) {
 		        String nombreDestino = (String) table.getValueAt(selectedRow, 0);
 		        String nombreHotel = (String) table.getValueAt(selectedRow, 1);
 		        String movilidad = (String) table.getValueAt(selectedRow, 2);
@@ -171,16 +212,15 @@ public class CrearReserva extends JFrame {
 		        Pasaje pasaje = new Pasaje(nombreDestino, nombreHotel, movilidad);
 
 		        listaPasajes.add(pasaje);
-		        JLabel informacion ;
-		        informacion.setText("Pasaje agregado: " + nombreHotel + " en " + nombreDestino + " con movilidad " + movilidad);
+		        JLabel informacion = new JLabel("Pasaje agregado: " + nombreHotel + " en " + nombreDestino + " con movilidad " + movilidad + "\n"
+		        + "Para el pasajero: " + nombre + " " + apellido + " y su DNI es: " + dni);
+			    JFrame frame = new JFrame("Información");
+			    frame.add(informacion);
+			    frame.pack();
+			    frame.setVisible(true);
 		    } else {
-		    	JLabel informacion ;
-		        informacion.setText("Seleccione un hotel de la tabla");
+		    	JLabel informacion = new JLabel("Seleccione un hotel de la tabla") ;
+		        
 		    }
 		}
-
-
-		
-
-	 
 }

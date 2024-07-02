@@ -69,8 +69,8 @@ public class Usuario {
 		} else {
 			
 			for (Usuario usuario1 : controlador.getAllUsers()) {
-				if (usuario1.getUsuario().equals(usuario1) && usuario1.getContraseña().equals(contraseña)) {
-					return "Ingresa";
+				if (usuario1.getUsuario().equals(usuario) && usuario1.getContraseña().equals(contraseña)) {
+					return Integer.toString(usuario1.getRol()) ;
 				}
 			}
 			return "No se encontró";

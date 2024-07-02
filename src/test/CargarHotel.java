@@ -35,6 +35,7 @@ public class CargarHotel extends JFrame {
 	    private Destino seleccionar;
 	    private JTextField filtrar;
 	private Destino destino = new Destino();
+	private JButton filtro;
 
 	/**
 	 * Launch the application.
@@ -123,7 +124,7 @@ public class CargarHotel extends JFrame {
             frame.setVisible(true);
         }
     });
-    btnAgregar.setBounds(187, 280, 187, 58);
+    btnAgregar.setBounds(218, 280, 187, 58);
     contentPane.add(btnAgregar);
     
     Editar = new JButton("Editar");
@@ -178,7 +179,7 @@ public class CargarHotel extends JFrame {
             }       	
     	}
     });
-    Editar.setBounds(581, 280, 166, 58);
+    Editar.setBounds(480, 280, 166, 58);
     contentPane.add(Editar);
     
     JMenuBar menuBar = new JMenuBar();
@@ -190,22 +191,24 @@ public class CargarHotel extends JFrame {
     
     
     filtrar = new JTextField();
-    filtrar.setBounds(15, 316, 86, 20);
+    filtrar.setBounds(25, 233, 86, 20);
     contentPane.add(filtrar);
     filtrar.setColumns(10);
     
     JLabel lblNewLabel = new JLabel("Criterio");
-    lblNewLabel.setBounds(127, 319, 62, 14);
+    lblNewLabel.setBounds(25, 220, 62, 14);
     contentPane.add(lblNewLabel);
     
-    JButton filtrar = new JButton("Filtrar");
-    filtrar.setBounds(185, 141, 89, 23);
-    contentPane.add(filtrar);
-    filtrar.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {       		
-    		Filtrar(filtrar.getText());       		
+    
+    filtro = new JButton("Filtrar");
+    filtro.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		Filtrar(filtrar.getText());
     	}
     });
+    filtro.setBounds(122, 232, 89, 23);
+    contentPane.add(filtro);
+    
     // Configurar el modelo de selección
     ListSelectionModel selectionModel = table.getSelectionModel();
     selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

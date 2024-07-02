@@ -103,9 +103,11 @@ public class Vuelo {
 
     public List<Vuelo> getAllVuelos() {
         List<Vuelo> vuelos = new ArrayList<>();
-        try (Connection conn = (Connection) Conexion.getInstance();
+        try {
+        	Connection conn =  Conexion.getInstance().getConnection();
+        
             PreparedStatement statement = conn.prepareStatement("SELECT * FROM vuelos");
-            ResultSet resultSet = statement.executeQuery()){
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Vuelo vuelo = new Vuelo(

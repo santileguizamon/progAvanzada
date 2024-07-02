@@ -1,11 +1,14 @@
 package principal;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Connection;
+import javax.swing.JOptionPane;
+
+
 
 public class Conexion {
-	private static final String URL = "jbdc:mysql://localhost:3306/aerolinea";
+	private static final String URL = "jdbc:mysql://localhost:3306/aerolinea2";
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 	
@@ -15,7 +18,9 @@ public class Conexion {
 	
 	private Conexion() {
 		try {
-			connection = (Connection) DriverManager.getConnection(URL, USER, PASSWORD);
+			
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+			JOptionPane.showConfirmDialog(null, "se conecto");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}

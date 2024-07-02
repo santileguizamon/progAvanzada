@@ -168,7 +168,7 @@ public class CargarVuelo extends JFrame {
        
         	}
         });
-        btnAgregar.setBounds(187, 280, 187, 58);
+        btnAgregar.setBounds(214, 293, 187, 58);
         contentPane.add(btnAgregar);
         
         Editar = new JButton("Editar");
@@ -179,36 +179,18 @@ public class CargarVuelo extends JFrame {
                 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
                     
-                    String nombreAvion = (String) table.getValueAt(selectedRow, 1);
-                    String nombreDestino = (String) table.getValueAt(selectedRow, 2);
-                    String nombreOrigen = (String) table.getValueAt(selectedRow, 3);
-                    Date fecha = null;
-					try {
-						fecha = dateFormat.parse((String) table.getValueAt(selectedRow,4));
-					} catch (ParseException e1) {
-						
-						e1.printStackTrace();
-					}
-                    Time salida = null;
-					try {
-						salida = (Time) timeFormat.parse((String) table.getValueAt(selectedRow,5));
-					} catch (ParseException e1) {
-						
-						e1.printStackTrace();
-					}
-                    Time llegada = null;
-					try {
-						llegada = (Time) timeFormat.parse((String) table.getValueAt(selectedRow,6));
-					} catch (ParseException e1) {
-						
-						e1.printStackTrace();
-					}
+                    String nombreAvion = (String) table.getValueAt(selectedRow, 0);
+                    String nombreDestino = (String) table.getValueAt(selectedRow, 1);
+                    String nombreOrigen = (String) table.getValueAt(selectedRow, 2);
+                    Date fecha = (Date) table.getValueAt(selectedRow, 3);
+                    Time horarioSalida = (Time) table.getValueAt(selectedRow, 4);
+                    Time horarioLlegada = (Time) table.getValueAt(selectedRow, 5);
 
                     JFrame frame = new JFrame("Editar Vuelo");
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.setSize(300, 200);
                     JPanel panel = new JPanel();
-                    panel.setLayout(new GridLayout(3, 2));
+                    panel.setLayout(getLayout());
 
                     JLabel lblAvion = new JLabel("Nombre Avion:");
                     JTextField txtAvion = new JTextField(nombreAvion);
@@ -219,9 +201,9 @@ public class CargarVuelo extends JFrame {
                     JLabel lblFecha = new JLabel("Fecha:");
                     JTextField txtFecha = new JTextField(fecha.toGMTString());
                     JLabel lblSalida = new JLabel("Horario de salida:");
-                    JTextField txtSalida = new JTextField(salida.toGMTString());
+                    JTextField txtSalida = new JTextField(horarioSalida.toGMTString());
                     JLabel lblLlegada = new JLabel("Horario de llegada:");
-                    JTextField txtLlegada = new JTextField(llegada.toGMTString());
+                    JTextField txtLlegada = new JTextField(horarioLlegada.toGMTString());
                     panel.add(lblAvion);
                     panel.add(txtAvion);
                     panel.add(lblNombreDestino);
@@ -242,28 +224,10 @@ public class CargarVuelo extends JFrame {
                             String updatedAvion = txtAvion.getText();
                             String updatedNombreDestino = txtNombreDestino.getText();
                             String updatedOrigen = txtOrigen.getText();
-                            Date updatedFecha = null;
-    						try {
-    							updatedFecha = dateFormat.parse(txtFecha.getText());
-    						} catch (ParseException e1) {
-    							// TODO Auto-generated catch block
-    							e1.printStackTrace();
-    						}
-                            Time updatedHorarioSalida = null;
-    						try {
-    							updatedHorarioSalida = (Time) timeFormat.parse(txtSalida.getText());
-    						} catch (ParseException e1) {
-    							// TODO Auto-generated catch block
-    							e1.printStackTrace();
-    						}
-                            Time updatedHorarioLlegada = null;
-    						try {
-    							updatedHorarioLlegada = (Time) timeFormat.parse(txtLlegada.getText());
-    						} catch (ParseException e1) {
-    							// TODO Auto-generated catch block
-    							e1.printStackTrace();
-    						}
-
+                            Date updatedFecha = txtFecha.getText();   						
+                            Time updatedHorarioSalida = txtSalida.getText();    						
+                            Time updatedHorarioLlegada = txtLlegada.getText();
+    						
                             Vuelo.updatedVuelo(updatedAvion, updatedNombreDestino, updatedOrigen,updatedFecha, updatedHorarioSalida, updatedHorarioLlegada );
                             actualizarTabla();
                             frame.dispose();
@@ -279,7 +243,7 @@ public class CargarVuelo extends JFrame {
         		
         	}
         });
-        Editar.setBounds(581, 280, 166, 58);
+        Editar.setBounds(470, 293, 166, 58);
         contentPane.add(Editar);
         
         JMenuBar menuBar = new JMenuBar();
@@ -287,22 +251,25 @@ public class CargarVuelo extends JFrame {
         contentPane.add(menuBar);
         
         filtrar = new JTextField();
-        filtrar.setBounds(15, 316, 86, 20);
+        filtrar.setBounds(25, 235, 86, 20);
         contentPane.add(filtrar);
         filtrar.setColumns(10);
         
         JLabel lblNewLabel = new JLabel("Criterio");
-        lblNewLabel.setBounds(127, 319, 62, 14);
+        lblNewLabel.setBounds(26, 220, 62, 14);
         contentPane.add(lblNewLabel);
         
-        JButton filtrar = new JButton("Filtrar");
-        filtrar.setBounds(185, 141, 89, 23);
-        contentPane.add(filtrar);
-        filtrar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {       		
-        		Filtrar(filtrar.getText());       		
+        
+        
+        JButton filtro = new JButton("Filtrar");
+        filtro.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Filtrar(filtrar.getText());
         	}
         });
+        filtro.setBounds(118, 234, 89, 23);
+        contentPane.add(filtro);
+        
        
 
         // Crear el botón de eliminar
@@ -334,9 +301,9 @@ public class CargarVuelo extends JFrame {
                         String nombreAvion = (String) table.getValueAt(selectedRow, 0);
                         String nombreDestino = (String) table.getValueAt(selectedRow, 1);
                         String nombreOrigen = (String) table.getValueAt(selectedRow, 2);
-                        String fecha = (String) table.getValueAt(selectedRow, 3);
-                        String horarioSalida = (String) table.getValueAt(selectedRow, 4);
-                        String horarioLlegada = (String) table.getValueAt(selectedRow, 5);
+                        Date fecha = (Date) table.getValueAt(selectedRow, 3);
+                        Time horarioSalida = (Time) table.getValueAt(selectedRow, 4);
+                        Time horarioLlegada = (Time) table.getValueAt(selectedRow, 5);
                         
                         
                     }

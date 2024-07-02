@@ -96,7 +96,7 @@ public class PantallaInicio extends JFrame {
 		JLabel errorContraseña = new JLabel("Contraseña incorrecto");
 		errorContraseña.setForeground(Color.RED);
 		errorContraseña.setBounds(135, 173, 126, 14);
-		errorNombre.setVisible(false);	
+		errorContraseña.setVisible(false);	
 		contentPane.add(errorContraseña);
 		
 		JButton botonIngresar = new JButton("Ingresar");
@@ -107,12 +107,12 @@ public class PantallaInicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 				String respuesta = Usuario.IniciarSesion(inputNombre.getText(), inputContraseña.getText());
-				 if(respuesta.equals("rol:1")) {
+				 if(respuesta.equals("1")) {
 					 
 					 HomeGerente homeGerente = new HomeGerente(inputNombre.getText());
 					 homeGerente.setVisible(true);
 					 dispose();
-				 }else if(respuesta.equals("rol:2")) {
+				 }else if(respuesta.equals("2")) {
 					 
 					 HomeEmpleado homeEmpleado = new HomeEmpleado(inputNombre.getText());
 					 homeEmpleado.setVisible(true); 

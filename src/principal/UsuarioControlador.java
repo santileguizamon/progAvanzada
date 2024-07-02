@@ -19,7 +19,7 @@ public class UsuarioControlador implements UserRepository {
     public List<Usuario> getAllUsers() {
         List<Usuario> users = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users ");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM usuario ");
             ResultSet resultSet = statement.executeQuery();
        
             while (resultSet.next()) {
