@@ -41,6 +41,7 @@ public class CrearReserva extends JFrame {
 	private JTextField nombre;
 	private JTextField apellido;
 	private JTextField dni;
+	private JTable table_2;
 
 	/**
 	 * Launch the application.
@@ -73,9 +74,15 @@ public class CrearReserva extends JFrame {
 		
 		String[] columnNames = {"nombreHotel", "nombreDestino", "movilidad"};
 		 model = new DefaultTableModel(columnNames, 0);
-		 table = new JTable(model);
+		 table_2 = new JTable(model);
 		actualizarTabla();
+		table_2.setBounds(10, 11, 531, 110);
+		contentPane.add(table_2);
 		contentPane.setLayout(null);
+		
+		 
+	       
+	        
 		
 		
 		filtro = new JTextField();
@@ -139,6 +146,8 @@ public class CrearReserva extends JFrame {
         JLabel lblNewLabel_1 = new JLabel("Dni");
         lblNewLabel_1.setBounds(448, 127, 46, 14);
         contentPane.add(lblNewLabel_1);
+        
+       
         
        
         
@@ -215,7 +224,7 @@ public class CrearReserva extends JFrame {
 		        JLabel informacion = new JLabel("Pasaje agregado: " + nombreHotel + " en " + nombreDestino + " con movilidad " + movilidad + "\n"
 		        + "Para el pasajero: " + nombre + " " + apellido + " y su DNI es: " + dni);
 			    JFrame frame = new JFrame("Información");
-			    frame.add(informacion);
+			    frame.getContentPane().add(informacion);
 			    frame.pack();
 			    frame.setVisible(true);
 		    } else {

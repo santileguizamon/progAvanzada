@@ -38,20 +38,38 @@ public class HomeEmpleado extends JFrame {
 				dispose();
 			}
 		});
-		pasajeBtn.setBounds(163, 82, 110, 23);
+		pasajeBtn.setBounds(89, 90, 110, 23);
 		contentPane.add(pasajeBtn);
 		
 		JButton reservaBtn = new JButton("Crear Reserva");
 		reservaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CrearReserva reserva = new CrearReserva();
+				dispose();
 			}
 		});
-		reservaBtn.setBounds(163, 126, 110, 23);
+		reservaBtn.setBounds(215, 90, 110, 23);
 		contentPane.add(reservaBtn);
 		
 		JButton botonCerrarSesion = new JButton("Cerrar sesion");
 		botonCerrarSesion.setBounds(315, 216, 97, 23);
 		contentPane.add(botonCerrarSesion);
+		
+		JButton btnNewButton = new JButton("Ver Vuelos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(89, 134, 110, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Ver Hoteles");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBounds(215, 134, 110, 23);
+		contentPane.add(btnNewButton_1);
 		botonCerrarSesion.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				

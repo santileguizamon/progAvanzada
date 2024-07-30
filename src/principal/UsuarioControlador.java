@@ -23,7 +23,7 @@ public class UsuarioControlador implements UserRepository {
             ResultSet resultSet = statement.executeQuery();
        
             while (resultSet.next()) {
-            	Usuario user = new Usuario(resultSet.getInt("id"), resultSet.getString("usuario"), resultSet.getString("contraseña"), resultSet.getInt("rol"));
+            	Usuario user = new Usuario(resultSet.getInt("id"), resultSet.getString("usuario"), resultSet.getString("contrasenia"), resultSet.getInt("rol"));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -36,13 +36,13 @@ public class UsuarioControlador implements UserRepository {
     public Usuario getUserById(int id) {
         Usuario user = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM usuario WHERE id = ?");
             statement.setInt(1, id);
             
             ResultSet resultSet = statement.executeQuery();
             
             if (resultSet.next()) {
-                user = new Usuario(resultSet.getInt("id"), resultSet.getString("usuario"), resultSet.getString("contraseña"), resultSet.getInt("rol"));
+                user = new Usuario(resultSet.getInt("id"), resultSet.getString("usuario"), resultSet.getString("contrasenia"), resultSet.getInt("rol"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class UsuarioControlador implements UserRepository {
 	@Override
     public void addUser(Usuario usuario) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO users (usuario, contraseña) VALUES (?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO usuario (usuario, contrasenia) VALUES (?, ?)");
             statement.setString(1, usuario.getUsuario());
             statement.setString(2, usuario.getContraseña());
             
@@ -69,7 +69,7 @@ public class UsuarioControlador implements UserRepository {
 	@Override
     public void updateUser(Usuario usuario) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE users SET name = ?, email = ? WHERE id = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE usuario SET nombre = ?, contrasenia = ? WHERE id = ?");
             statement.setString(1, usuario.getUsuario());
             statement.setString(2, usuario.getContraseña());
             statement.setInt(3, usuario.getId());
@@ -86,7 +86,7 @@ public class UsuarioControlador implements UserRepository {
     @Override
     public void deleteUser(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM usuario WHERE id = ?");
             statement.setInt(1, id);
             
             int rowsDeleted = statement.executeUpdate();

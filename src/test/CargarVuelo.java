@@ -221,12 +221,33 @@ public class CargarVuelo extends JFrame {
                     btnAceptar.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
 
+                        	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+                        	
                             String updatedAvion = txtAvion.getText();
                             String updatedNombreDestino = txtNombreDestino.getText();
                             String updatedOrigen = txtOrigen.getText();
-                            Date updatedFecha = txtFecha.getText();   						
-                            Time updatedHorarioSalida = txtSalida.getText();    						
-                            Time updatedHorarioLlegada = txtLlegada.getText();
+                            Date updatedFecha = null;
+    						try {
+    							updatedFecha = dateFormat.parse(txtFecha.getText());
+    						} catch (ParseException e1) {
+    							// TODO Auto-generated catch block
+    							e1.printStackTrace();
+    						}
+                            Time updatedHorarioSalida = null;
+    						try {
+    							updatedHorarioSalida = (Time) timeFormat.parse(txtSalida.getText());
+    						} catch (ParseException e1) {
+    							// TODO Auto-generated catch block
+    							e1.printStackTrace();
+    						}
+                            Time updatedHorarioLlegada = null;
+    						try {
+    							updatedHorarioLlegada = (Time) timeFormat.parse(txtLlegada.getText());
+    						} catch (ParseException e1) {
+    							// TODO Auto-generated catch block
+    							e1.printStackTrace();
+    						}
     						
                             Vuelo.updatedVuelo(updatedAvion, updatedNombreDestino, updatedOrigen,updatedFecha, updatedHorarioSalida, updatedHorarioLlegada );
                             actualizarTabla();
